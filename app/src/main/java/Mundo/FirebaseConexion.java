@@ -59,10 +59,15 @@ public class FirebaseConexion {
 
                         }
                         else if(task.isSuccessful()){
+
                             Toast.makeText(mContext, "Authentication Succeful.",
                                     Toast.LENGTH_SHORT).show();
+
                             userID = mAuth.getCurrentUser().getUid();
+
                             Log.d(TAG, "onComplete: Authstate changed: " + userID);
+
+
                         }
 
                     }
