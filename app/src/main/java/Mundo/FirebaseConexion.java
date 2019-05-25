@@ -2,8 +2,14 @@ package Mundo;
 
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -18,6 +24,8 @@ public class FirebaseConexion {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
     private String userID;
+
+    private static final String TAG = "FirebaseMethods";
 
     //vars
     private Context mContext;
@@ -38,40 +46,27 @@ public class FirebaseConexion {
         }
     }
 
-    private void createAccount(String email, String password) {
-
-        if (!validateForm()) {
-            return;
-        }
-
-        showProgressDialog();
-
-        // [START create_user_with_email]
+    public void createAccount(final String email, String password){
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(EmailPasswordActivity.this, "Authentication Succesful",
-                                    Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(mContext, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
 
                         }
+                        else if(task.isSuccessful()){
+                            Toast.makeText(mContext, "Authentication Succeful.",
+                                    Toast.LENGTH_SHORT).show();
+                            userID = mAuth.getCurrentUser().getUid();
+                            Log.d(TAG, "onComplete: Authstate changed: " + userID);
+                        }
 
-                        // [START_EXCLUDE]
-                        hideProgressDialog();
-                        // [END_EXCLUDE]
                     }
                 });
-        // [END create_user_with_email]
     }
 
 
