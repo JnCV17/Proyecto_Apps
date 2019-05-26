@@ -17,6 +17,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import android.widget.Toast;
 
+import java.util.Date;
+
 public class FirebaseConexion {
 
     private FirebaseAuth mAuth;
@@ -74,12 +76,13 @@ public class FirebaseConexion {
                 });
     }
 
+    public void crearCurso(Curso curso){
 
-    private void escribirBD(){
-
-
-
+        myRef = FirebaseDatabase.getInstance().getReference();
+        myRef.child("cursos").child(curso.getId()).setValue(curso);
     }
+
+
 
 
 
