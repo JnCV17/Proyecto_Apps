@@ -25,7 +25,7 @@ public class CursosActivity extends AppCompatActivity {
 
     private EditText txtId,txtNombre,txtDescripcion,dateInicio,dateFinal,txtHorario,dateParciales,txtNovedad;
     private String id,nombre,descripcion,fechaInicial,fechaFinal,horario,fechaParcial,novedad;
-    private Button crear;
+    private Button crear,actualizar,consultar,eliminar;
     private FirebaseConexion fbCon;
 
     @Override
@@ -42,6 +42,9 @@ public class CursosActivity extends AppCompatActivity {
         dateParciales = (EditText)findViewById(R.id.dateParciales);
         txtNovedad = (EditText)findViewById(R.id.txtNovedad);
         crear = (Button)findViewById(R.id.btnCrear) ;
+        actualizar = (Button)findViewById(R.id.btnActualizar) ;
+        consultar = (Button)findViewById(R.id.btnConsultar) ;
+        eliminar = (Button)findViewById(R.id.btnEliminar) ;
 
         fbCon = new FirebaseConexion(this);
 
@@ -70,6 +73,23 @@ public class CursosActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
 
 
+            }
+        });
+
+        consultar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                id = txtId.getText().toString();
+
+                Curso consulta = fbCon.consultarCurso(id);
+
+                txtNombre.setText(consulta.getNombre());
+                txtDescripcion.setText(consulta.getDescripcion());
+                dateInicio.setText(consulta.getFechaInicio());
+                dateFinal.setText(consulta.getFechaFinal());
+                txtHorario.setText(consulta.getHorario());
+                dateParciales.setText(consulta.getFechaParciales());
+                txtNovedad.setText(consulta.getNovedades());
             }
         });
     }

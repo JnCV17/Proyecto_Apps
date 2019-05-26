@@ -46,24 +46,28 @@
         android:id="@+id/txtHorario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="33dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="17dp"
         android:layout_marginBottom="209dp"
         android:ems="10"
         android:hint="Horario"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnActualizar"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/txtNovedad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="44dp"
         android:ems="10"
         android:hint="Novedad"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnConsultar"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -106,9 +110,43 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginTop="21dp"
+        android:layout_marginEnd="2dp"
         android:ems="10"
         android:hint="Fecha parciales"
         android:inputType="date"
-        app:layout_constraintStart_toStartOf="@+id/txtHorario"
+        app:layout_constraintEnd_toStartOf="@+id/btnEliminar"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtHorario" />
+
+    <Button
+        android:id="@+id/btnConsultar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Consultar"
+        app:layout_constraintBottom_toTopOf="@+id/txtNovedad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtNovedad"
+        app:layout_constraintTop_toTopOf="@+id/txtNovedad" />
+
+    <Button
+        android:id="@+id/btnEliminar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="6dp"
+        android:text="Eliminar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dateParciales"
+        app:layout_constraintTop_toBottomOf="@+id/btnActualizar" />
+
+    <Button
+        android:id="@+id/btnActualizar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Actualizar"
+        app:layout_constraintBottom_toTopOf="@+id/dateParciales"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtHorario"
+        app:layout_constraintTop_toTopOf="@+id/dateParciales" />
+
 </android.support.constraint.ConstraintLayout>
