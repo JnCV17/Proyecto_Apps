@@ -79,7 +79,10 @@ public class FirebaseConexion {
     public void crearCurso(Curso curso){
 
         myRef = FirebaseDatabase.getInstance().getReference();
-        myRef.child("cursos").child(curso.getId()).setValue(curso);
+
+        myRef.child("Cursos")
+                .child(curso.getId())
+                .setValue(curso);
     }
 
 
