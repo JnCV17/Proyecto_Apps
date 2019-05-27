@@ -91,6 +91,12 @@ public class FirebaseConexion {
                 .setValue(curso);
     }
 
+    public void crearProfesor(Profesores profesor){
+        myRef.child("Profesores")
+                .child(profesor.getCedula())
+                .setValue(profesor);
+    }
+
 
     public Curso consultarCurso(String id){
 

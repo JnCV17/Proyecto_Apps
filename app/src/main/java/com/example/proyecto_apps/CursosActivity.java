@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -77,6 +78,15 @@ public class CursosActivity extends AppCompatActivity {
                 fbCon.crearCurso(c);
                 Toast.makeText(getApplicationContext(), "Curso Agregado",
                         Toast.LENGTH_SHORT).show();
+
+                txtId.setText("");
+                txtNombre.setText("");
+                txtDescripcion.setText("");
+                txtHorario.setText("");
+                dateInicio.setText("");
+                dateFinal.setText("");
+                dateParciales.setText("");
+                txtNovedad.setText("");
 
 
             }
@@ -144,6 +154,54 @@ public class CursosActivity extends AppCompatActivity {
                 });
             }
         });
+
+        eliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                id = txtId.getText().toString();
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Cursos");
+                DatabaseReference currentUserBD = mDatabase.child(id);
+                currentUserBD.removeValue();
+                Toast.makeText(getApplicationContext(), "Curso Eliminado",
+                        Toast.LENGTH_SHORT).show();
+
+
+            }
+
+        });
+
+        actualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                id = txtId.getText().toString();
+
+
+                Curso c = new Curso( "","","","","", "", "", "");
+
+                c.setNombre(txtNombre.getText().toString());
+                c.setDescripcion(txtDescripcion.getText().toString());
+                c.setFechaInicio(dateInicio.getText().toString());
+                c.setFechaFinal(dateFinal.getText().toString());
+                c.setHorario(txtHorario.getText().toString());
+                c.setFechaParciales(dateParciales.getText().toString());
+                c.setNovedades(txtNovedad.getText().toString());
+
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Cursos");
+                DatabaseReference currentUserBD = mDatabase.child(id);
+                currentUserBD.setValue(c);
+
+                Toast.makeText(getApplicationContext(), "Curso Actualizado",
+                        Toast.LENGTH_SHORT).show();
+
+
+            }
+
+        });
+
+
     }
 
 }

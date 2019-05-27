@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GestionActivity">
+
+    <Button
+        android:id="@+id/btnCursos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="147dp"
+        android:layout_marginTop="190dp"
+        android:text="Cursos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnProfesores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="34dp"
+        android:text="Profesores"
+        app:layout_constraintStart_toStartOf="@+id/btnCursos"
+        app:layout_constraintTop_toBottomOf="@+id/btnCursos" />
+
+    <Button
+        android:id="@+id/btnEstudiantes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="Estudiantes"
+        app:layout_constraintStart_toStartOf="@+id/btnProfesores"
+        app:layout_constraintTop_toBottomOf="@+id/btnProfesores" />
+</android.support.constraint.ConstraintLayout>
