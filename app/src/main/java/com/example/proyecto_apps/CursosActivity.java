@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.UUID;
 
@@ -27,6 +32,7 @@ public class CursosActivity extends AppCompatActivity {
     private String id,nombre,descripcion,fechaInicial,fechaFinal,horario,fechaParcial,novedad;
     private Button crear,actualizar,consultar,eliminar;
     private FirebaseConexion fbCon;
+    private static final String TAG = "CursosActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,15 +87,61 @@ public class CursosActivity extends AppCompatActivity {
             public void onClick(View v) {
                 id = txtId.getText().toString();
 
-                Curso consulta = fbCon.consultarCurso(id);
+                final String idCompare = id;
 
-                txtNombre.setText(consulta.getNombre());
-                txtDescripcion.setText(consulta.getDescripcion());
-                dateInicio.setText(consulta.getFechaInicio());
-                dateFinal.setText(consulta.getFechaFinal());
-                txtHorario.setText(consulta.getHorario());
-                dateParciales.setText(consulta.getFechaParciales());
-                txtNovedad.setText(consulta.getNovedades());
+                final String[] valores = new String[8];
+
+                FirebaseDatabase.getInstance().getReference("Cursos").getRef().addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                            String idActual = postSnapshot.child("id").getValue().toString();
+
+                            if(idActual.compareTo(idCompare) == 0){
+                                valores[0] = postSnapshot.child("id").getValue().toString();
+                                Log.e(TAG, "======="+postSnapshot.child("id").getValue());
+
+                                valores[1] = postSnapshot.child("nombre").getValue().toString();
+                                Log.e(TAG, "======="+postSnapshot.child("nombre").getValue());
+                                txtNombre.setText(postSnapshot.child("nombre").getValue().toString());
+
+                                valores[2] = postSnapshot.child("descripcion").getValue().toString();
+                                Log.e(TAG, "======="+postSnapshot.child("descripcion").getValue());
+                                txtDescripcion.setText(postSnapshot.child("descripcion").getValue().toString());
+
+                                valores[3] = postSnapshot.child("fechaInicio").getValue().toString();
+                                Log.e(TAG, "======="+postSnapshot.child("fechaInicio").getValue());
+                                dateInicio.setText(postSnapshot.child("fechaInicio").getValue().toString());
+
+                                valores[4] = postSnapshot.child("fechaFinal").getValue().toString();
+                                Log.e(TAG, "======="+postSnapshot.child("fechaFinal").getValue());
+                                dateFinal.setText(postSnapshot.child("fechaFinal").getValue().toString());
+
+                                valores[5] = postSnapshot.child("horario").getValue().toString();
+                                Log.e(TAG, "======="+postSnapshot.child("horario").getValue());
+                                txtHorario.setText(postSnapshot.child("horario").getValue().toString());
+
+                                valores[6] = postSnapshot.child("fechaParciales").getValue().toString();
+                                Log.e(TAG, "======="+postSnapshot.child("fechaParciales").getValue());
+                                dateParciales.setText(postSnapshot.child("fechaParciales").getValue().toString());
+
+                                valores[7] = postSnapshot.child("novedades").getValue().toString();
+                                Log.e(TAG, "======="+postSnapshot.child("novedades").getValue());
+                                txtNovedad.setText(postSnapshot.child("novedades").getValue().toString());
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Failed to read value
+                        Log.e(TAG, "Failed to read app title value.", error.toException());
+                    }
+                });
             }
         });
     }

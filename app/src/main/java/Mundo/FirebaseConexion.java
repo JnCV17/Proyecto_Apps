@@ -19,6 +19,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import android.widget.Toast;
 
@@ -32,7 +34,7 @@ public class FirebaseConexion {
     private DatabaseReference myRef;
     private String userID;
 
-    private static final String TAG = "FirebaseMethods";
+    private static final String TAG = "FirebaseConexion";
 
     //vars
     private Context mContext;
@@ -92,47 +94,61 @@ public class FirebaseConexion {
 
     public Curso consultarCurso(String id){
 
-        final String id1 = id;
-        final Curso[] c1 = new Curso[1];
-        DatabaseReference cursosRef = myDb.getReference(id);
-        cursosRef.addChildEventListener(new ChildEventListener() {
+        final String idCompare = id;
+
+        final String[] valores = new String[8];
+
+        myDb.getReference("Cursos").getRef().addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                Curso c = dataSnapshot.getValue(Curso.class);
-                    c1[0] = new Curso(c.getId(),c.getNombre(),c.getDescripcion(),c.getFechaInicio(),c.getFechaFinal(),c.getHorario(),c.getFechaParciales(),c.getNovedades());
-                    System.out.println(dataSnapshot.getKey() + " CURSO: " + c1[0].getId() + " meters tall.");
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
 
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                    String idActual = postSnapshot.child("id").getValue().toString();
+
+                    if(idActual.compareTo(idCompare) == 0){
+                        valores[0] = postSnapshot.child("id").getValue().toString();
+                        Log.e(TAG, "======="+postSnapshot.child("id").getValue());
+
+                        valores[1] = postSnapshot.child("nombre").getValue().toString();
+                        Log.e(TAG, "======="+postSnapshot.child("nombre").getValue());
+
+                        valores[2] = postSnapshot.child("descripcion").getValue().toString();
+                        Log.e(TAG, "======="+postSnapshot.child("descripcion").getValue());
+
+                        valores[3] = postSnapshot.child("fechaInicio").getValue().toString();
+                        Log.e(TAG, "======="+postSnapshot.child("fechaInicio").getValue());
+
+                        valores[4] = postSnapshot.child("fechaFinal").getValue().toString();
+                        Log.e(TAG, "======="+postSnapshot.child("fechaFinal").getValue());
+
+                        valores[5] = postSnapshot.child("horario").getValue().toString();
+                        Log.e(TAG, "======="+postSnapshot.child("horario").getValue());
+
+                        valores[6] = postSnapshot.child("fechaParciales").getValue().toString();
+                        Log.e(TAG, "======="+postSnapshot.child("fechaParciales").getValue());
+
+                        valores[7] = postSnapshot.child("novedades").getValue().toString();
+                        Log.e(TAG, "======="+postSnapshot.child("novedades").getValue());
+
+                    }
+                }
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.e(TAG, "Failed to read app title value.", error.toException());
             }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-
-            // ...
         });
-        return c1[0];
+
+        for(int i = 0; i < 8; i++){
+            Log.e(TAG, "======="+valores[i]);
+        }
+
+        return new Curso(valores[0],valores[1],valores[2],valores[3],valores[4],valores[5],valores[6],valores[7]);
+
     }
-
-
-
-
-
 
 }
