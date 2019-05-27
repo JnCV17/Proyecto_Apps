@@ -181,17 +181,20 @@ public class ProfesoresActivity extends AppCompatActivity {
                 });
             }
         });
-/*
-        eliminar.setOnClickListener(new View.OnClickListener() {
+
+        desactivar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                id = txtId.getText().toString();
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Cursos");
-                DatabaseReference currentUserBD = mDatabase.child(id);
-                currentUserBD.removeValue();
-                Toast.makeText(getApplicationContext(), "Curso Eliminado",
+                cedula = txtCedula.getText().toString();
+                Profesores p = new Profesores("","","","","","","","","",false);
+                p.setActivo(false);
+
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Profesores");
+                DatabaseReference currentUserBD = mDatabase.child(cedula);
+                currentUserBD.setValue(p);
+                Toast.makeText(getApplicationContext(), "Profesor Desactivado",
                         Toast.LENGTH_SHORT).show();
 
 
@@ -199,35 +202,38 @@ public class ProfesoresActivity extends AppCompatActivity {
 
         });
 
-        actualizar.setOnClickListener(new View.OnClickListener() {
+        modificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                id = txtId.getText().toString();
+                cedula = txtCedula.getText().toString();
 
 
-                Curso c = new Curso( "","","","","", "", "", "");
+                Profesores p = new Profesores("","","","","","","","","");
 
-                c.setNombre(txtNombre.getText().toString());
-                c.setDescripcion(txtDescripcion.getText().toString());
-                c.setFechaInicio(dateInicio.getText().toString());
-                c.setFechaFinal(dateFinal.getText().toString());
-                c.setHorario(txtHorario.getText().toString());
-                c.setFechaParciales(dateParciales.getText().toString());
-                c.setNovedades(txtNovedad.getText().toString());
 
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Cursos");
-                DatabaseReference currentUserBD = mDatabase.child(id);
-                currentUserBD.setValue(c);
+                p.setNombre(txtNombre.getText().toString());
+                p.setApellido(txtApellido.getText().toString());
+                p.setFacultad(txtFacultad.getText().toString());
+                p.setMateria(txtMateria.getText().toString());
+                p.setPrograma(txtPrograma.getText().toString());
+                p.setUsuario(txtUsuario.getText().toString());
+                p.setContrasenia(txtContrasenia.getText().toString());
 
-                Toast.makeText(getApplicationContext(), "Curso Actualizado",
+
+
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Profesores");
+                DatabaseReference currentUserBD = mDatabase.child(cedula);
+                currentUserBD.setValue(p);
+
+                Toast.makeText(getApplicationContext(), "Profesor Actualizado",
                         Toast.LENGTH_SHORT).show();
 
 
             }
 
         });
-*/
+
 
     }
 

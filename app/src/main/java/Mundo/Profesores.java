@@ -11,7 +11,7 @@ public class Profesores {
     private String rolNombre;
     private String usuario;
     private String contrasenia;
-    private boolean isActivo;
+    private boolean isActivo = true;
 
 
 

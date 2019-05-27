@@ -22,6 +22,9 @@ public class Curso {
         this.novedades = novedades;
     }
 
+    public Curso() {
+    }
+
     public String getDescripcion() {
         return descripcion;
     }
@@ -84,5 +87,10 @@ public class Curso {
 
     public void setNovedades(String novedades) {
         this.novedades = novedades;
+    }
+
+    @Override
+    public String toString() {
+        return "Curso:" + nombre;
     }
 }
