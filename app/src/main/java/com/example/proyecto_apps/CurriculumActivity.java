@@ -1,8 +1,11 @@
 package com.example.proyecto_apps;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -40,19 +43,57 @@ public class CurriculumActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listCursos.clear();
-                for (DataSnapshot objSnaptshot : dataSnapshot.getChildren()){
+
+                for (DataSnapshot objSnaptshot : dataSnapshot.getChildren()) {
                     Curso p = objSnaptshot.getValue(Curso.class);
                     listCursos.add(p);
 
                     arrayAdapterCurso = new ArrayAdapter<Curso>(CurriculumActivity.this, android.R.layout.simple_list_item_1, listCursos);
                     listV_cursos.setAdapter(arrayAdapterCurso);
+
+                    listV_cursos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            Object o = arrayAdapterCurso.getItem(position).getId();
+                            String item = o.toString();
+
+                            Intent intent = new Intent(CurriculumActivity.this, PerfilCursoActivity.class);
+
+                            // Sending value to another activity using intent.
+                            intent.putExtra("ListViewClickedValue", item);
+
+                            startActivity(intent);
+
+
+
+                    }
+                    });
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
+
+
+        }
     }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
