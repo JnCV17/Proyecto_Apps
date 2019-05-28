@@ -98,6 +98,13 @@ public class FirebaseConexion {
     }
 
 
+    public void asignarUsuario(Profesores profesor,String id){
+
+        myRef.child("Cursos").child(id).setValue(profesor);
+
+    }
+
+
     public Curso consultarCurso(String id){
 
         final String idCompare = id;
