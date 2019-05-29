@@ -40,6 +40,11 @@ public class Profesores {
         this.isActivo = isActivo;
     }
 
+    public Profesores(String id) {
+
+        this.cedula = id;
+    }
+
     public boolean isActivo() {
         return isActivo;
     }

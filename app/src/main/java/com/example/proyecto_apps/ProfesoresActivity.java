@@ -32,6 +32,7 @@ public class ProfesoresActivity extends AppCompatActivity {
     private FirebaseConexion fbCon;
     private Spinner spnRol;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,6 +135,8 @@ public class ProfesoresActivity extends AppCompatActivity {
                 cedula = txtCedula.getText().toString();
 
                 final String idCompare = cedula;
+
+
 
 
 

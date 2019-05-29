@@ -100,7 +100,7 @@ public class FirebaseConexion {
 
     public void asignarUsuario(Profesores profesor,String id){
 
-        myRef.child("Cursos").child(id).setValue(profesor);
+        myRef.child("Cursos").child("Profesores").setValue(profesor);
 
     }
 
