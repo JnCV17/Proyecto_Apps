@@ -25,6 +25,10 @@ public class Curso {
     public Curso() {
     }
 
+    public Curso(String id) {
+        this.id = id;
+    }
+
     public String getDescripcion() {
         return descripcion;
     }

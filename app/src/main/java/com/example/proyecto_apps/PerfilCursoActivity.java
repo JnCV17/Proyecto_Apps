@@ -26,6 +26,7 @@ public class PerfilCursoActivity extends AppCompatActivity {
     private String intent;
 
     DatabaseReference databaseProfesores;
+    DatabaseReference databaseCursos;
 
 
     @Override
@@ -34,7 +35,8 @@ public class PerfilCursoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_perfil_curso);
 
         txtId = (EditText)findViewById(R.id.txtId);
-        txtEstudiantes = (EditText)findViewById(R.id.txtProfesores);
+        txtProfesores = (EditText)findViewById(R.id.txtProfesores);
+
 
         asignar = (Button)findViewById(R.id.btnAsignar);
 
@@ -63,10 +65,14 @@ public class PerfilCursoActivity extends AppCompatActivity {
         profesores = txtProfesores.getText().toString();
 
         databaseProfesores = FirebaseDatabase.getInstance().getReference("Cursos").child(id);
+        databaseCursos = FirebaseDatabase.getInstance().getReference("Profesores").child(profesores);
 
             String id = databaseProfesores.push().getKey();
+            String idC = databaseCursos.push().getKey();
+            Curso curso = new Curso(idC);
             Profesores profesores = new Profesores(id);
             databaseProfesores.child(id).setValue(profesores);
+            databaseCursos.child(idC).setValue(curso);
             Toast.makeText(this, "Profesor guardado", Toast.LENGTH_LONG).show();
 
 
